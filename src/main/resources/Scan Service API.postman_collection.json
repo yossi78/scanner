@@ -1,0 +1,230 @@
+{
+	"info": {
+		"_postman_id": "1eed27e9-643f-4a0c-a66e-9ae26588dd86",
+		"name": "Scan Service API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "513031"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Initiate Scan -1",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"type\": \"SCA\",\n  \"repo\": \"sample-repo\",\n  \"branch\": \"main\",\n  \"commitId\": \"abc123\",\n  \"issues\": 0,\n  \"valid\": true,\n  \"userId\": 1\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/scans/initiate",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"scans",
+								"initiate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Initiate Scan -2",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"type\": \"RENOVATE\",\n  \"repo\": \"sample-repo-2\",\n  \"branch\": \"develop\",\n  \"commitId\": \"bbb222\",\n  \"issues\": 0,\n  \"valid\": true,\n  \"userId\": 1\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/scans/initiate",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"scans",
+								"initiate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Initiate Scan -3",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"type\": \"SAST\",\n  \"repo\": \"sample-repo-3\",\n  \"branch\": \"release-3\",\n  \"commitId\": \"ccc333\",\n  \"issues\": 0,\n  \"valid\": true,\n  \"userId\": 1\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/scans/initiate",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"scans",
+								"initiate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Initiate Scan -4",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"type\": \"SCA\",\n  \"repo\": \"sample-repo-4\",\n  \"branch\": \"release-4\",\n  \"commitId\": \"ddd444\",\n  \"issues\": 4,\n  \"valid\": true,\n  \"userId\": 2\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/scans/initiate",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"scans",
+								"initiate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Count Pending Scans",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/scans/pending",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"scans",
+								"pending"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Scans by User",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/scans/user/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"scans",
+								"user",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Issues",
+			"item": [
+				{
+					"name": "Get Issues by User",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/issue?userId=200",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"issue"
+							],
+							"query": [
+								{
+									"key": "userId",
+									"value": "200"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All issues",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/issue/total",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"issue",
+								"total"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
