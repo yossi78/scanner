@@ -27,14 +27,13 @@ public class WatchdogRetryService {
     @Scheduled(fixedRate = 60000)
     public void performTask() {
         List<ScanAction> userActions = watchdogFileService.readAllOperations();
-
         for ( ScanAction scanAction: userActions)
         {
             switch (scanAction.getScanActionType()) {
                 case ADD:
                     log.info("Add new scan from file ");
                     Scan scan = scanService.initiateScan(scanAction.getScan(),false);
-                    if(scan!=null){
+                    if(scan!=null && scan.getIsScanned()){
                         FileUtil.deleteFile(scan.getFilePath());
                     }
                     break;

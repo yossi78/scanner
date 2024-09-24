@@ -23,8 +23,11 @@ public class Scan {
     private boolean valid;   // Whether scan is valid (no issues)
     private Long userId;     // Reference to user
 
+    private Boolean isScanned=false;
     @JsonIgnore
     @Transient
     private String filePath=null;
+
+
 
 }

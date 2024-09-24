@@ -10,6 +10,8 @@ import com.mend.io.scanner.watchdog.WatchdogFileService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.retry.annotation.Backoff;
+import org.springframework.retry.annotation.Retryable;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -31,8 +33,7 @@ public class ScanService {
             ScanAction scanAction = ScanAction.builder().scanActionType(ScanActionType.ADD).scan(scan).build();
             watchdogFileService.appendOperation(scanAction);
         }else{
-            scan =  scanRepository.save(scan);
-            //processScan(scan);
+            processScan(scan);
         }
         return scan;
     }
@@ -87,30 +88,31 @@ public class ScanService {
 
 
 
-//    @Async
-//    public void processScan(Scan scan) {
-//        log.debug("process scan type="+scan.getType());
-//        try {
-//            switch (scan.getType()) {
-//                case "SCA":
-//                    Thread.sleep(60000); // Simulating SCA scan
-//                    break;
-//                case "SAST":
-//                    Thread.sleep(90000); // Simulating SAST scan
-//                    break;
-//                case "RENOVATE":
-//                    Thread.sleep(30000); // Simulating RENOVATE scan
-//                    break;
-//                default:
-//                    throw new IllegalArgumentException("Unknown scan type: " + scan.getType());
-//            }
-//            scan.setStatus("Completed");
-//            scanRepository.save(scan);
-//        } catch (InterruptedException e) {
-//            log.error("Failed to process scan type="+scan.getType());
-//            scan.setStatus("Failed");
-//            scanRepository.save(scan);
-//        }
-//    }
+
+    public void processScan(Scan scan) {
+        log.info("process scan type="+scan.getType());
+        try {
+            switch (scan.getType()) {
+                case "SCA":
+                    Thread.sleep(60000); // Simulating SCA scan
+                    break;
+                case "SAST":
+                    Thread.sleep(90000); // Simulating SAST scan
+                    break;
+                case "RENOVATE":
+                    Thread.sleep(30000); // Simulating RENOVATE scan
+                    break;
+                default:
+                    throw new IllegalArgumentException("Unknown scan type: " + scan.getType());
+            }
+            scan.setStatus("Completed");
+            scan.setIsScanned(true);
+            scanRepository.save(scan);
+        } catch (InterruptedException e) {
+            log.error("Failed to process scan type="+scan.getType());
+            scan.setStatus("Failed");
+            scanRepository.save(scan);
+        }
+    }
 
 }
