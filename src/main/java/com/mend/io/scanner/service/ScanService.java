@@ -19,7 +19,6 @@ import java.util.List;
 @AllArgsConstructor
 public class ScanService {
 
-
     private ScanRepository scanRepository;
     private WatchdogFileService watchdogFileService;
 
@@ -33,8 +32,8 @@ public class ScanService {
             watchdogFileService.appendOperation(scanAction);
         }else{
             scan =  scanRepository.save(scan);
+            //processScan(scan);
         }
-        //processScan(scan);
         return scan;
     }
 
