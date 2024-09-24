@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "1eed27e9-643f-4a0c-a66e-9ae26588dd86",
-		"name": "Scan Service API",
+		"name": "Scanner",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "513031"
 	},
@@ -21,7 +21,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"type\": \"SCA\",\n  \"repo\": \"sample-repo\",\n  \"branch\": \"main\",\n  \"commitId\": \"abc123\",\n  \"issues\": 0,\n  \"valid\": true,\n  \"userId\": 1\n}"
+							"raw": "{\n  \"type\": \"SCA\",\n  \"repo\": \"sample-repo\",\n  \"branch\": \"main\",\n  \"commitId\": \"aaa111\",\n  \"issues\": 0,\n  \"valid\": true,\n  \"userId\": 1\n}"
 						},
 						"url": {
 							"raw": "http://localhost:8080/api/scans/initiate",
@@ -183,7 +183,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/issue?userId=200",
+							"raw": "http://localhost:8080/api/issue?userId=1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -196,7 +196,7 @@
 							"query": [
 								{
 									"key": "userId",
-									"value": "200"
+									"value": "1"
 								}
 							]
 						}
