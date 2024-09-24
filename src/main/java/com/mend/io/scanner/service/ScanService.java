@@ -30,6 +30,7 @@ public class ScanService {
         log.debug("Initiate scan");
         scan.setStatus("Pending");
         if(isApi){
+            scan=scanRepository.save(scan);
             ScanAction scanAction = ScanAction.builder().scanActionType(ScanActionType.ADD).scan(scan).build();
             watchdogFileService.appendOperation(scanAction);
         }else{
@@ -71,11 +72,6 @@ public class ScanService {
 
 
 
-
-    public List<Scan> getAllScans() {
-        return scanRepository.findAll(); // This uses JpaRepository's built-in method
-    }
-
     public int getTotalIssuesForAllUsers() {
         Integer totalIssues = scanRepository.findTotalIssuesForAllUsers();
         if (totalIssues == null) {
@@ -84,7 +80,6 @@ public class ScanService {
         log.info("Total issues for all users = " + totalIssues);
         return totalIssues;
     }
-
 
 
 

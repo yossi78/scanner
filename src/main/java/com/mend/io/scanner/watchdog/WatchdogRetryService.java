@@ -1,7 +1,5 @@
 package com.mend.io.scanner.watchdog;
 
-
-
 import com.mend.io.scanner.data_layer.Scan;
 import com.mend.io.scanner.model.ScanAction;
 import com.mend.io.scanner.service.ScanService;
