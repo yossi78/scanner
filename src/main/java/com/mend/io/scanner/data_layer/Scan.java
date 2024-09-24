@@ -1,11 +1,8 @@
 package com.mend.io.scanner.data_layer;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 import lombok.Data;
 
 @Entity
@@ -26,5 +23,8 @@ public class Scan {
     private boolean valid;   // Whether scan is valid (no issues)
     private Long userId;     // Reference to user
 
+    @JsonIgnore
+    @Transient
+    private String filePath=null;
 
 }

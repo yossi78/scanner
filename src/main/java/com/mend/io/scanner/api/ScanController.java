@@ -20,10 +20,15 @@ public class ScanController {
 
     @PostMapping("/initiate")
     public ResponseEntity<Scan> initiateScan(@RequestBody Scan scan) {
-        log.info("Initiating scan for repo: {}", scan.getRepo());
-        Scan savedScan = scanService.initiateScan(scan);
-        log.info("Scan initiated with ID: {}", savedScan.getId());
-        return ResponseEntity.ok(savedScan);
+        try {
+            log.info("Initiating scan for repo: {}", scan.getRepo());
+            Scan savedScan = scanService.initiateScan(scan,true);
+            log.info("Scan initiated with ID: {}", savedScan.getId());
+            return ResponseEntity.ok(savedScan);
+        } catch (Exception e) {
+            log.error("Failed to Initiating scan ");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
 

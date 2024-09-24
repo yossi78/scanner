@@ -4,6 +4,10 @@ package com.mend.io.scanner.service;
 import com.mend.io.scanner.data_layer.Scan;
 import com.mend.io.scanner.data_layer.ScanRepository;
 import com.mend.io.scanner.exception.ResourceNotFoundException;
+import com.mend.io.scanner.model.ScanAction;
+import com.mend.io.scanner.model.ScanActionType;
+import com.mend.io.scanner.watchdog.WatchdogFileService;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
@@ -12,16 +16,26 @@ import java.util.List;
 
 @Service
 @Slf4j
+@AllArgsConstructor
 public class ScanService {
 
-    @Autowired
-    private ScanRepository scanRepository;
 
-    public Scan initiateScan(Scan scan) {
+    private ScanRepository scanRepository;
+    private WatchdogFileService watchdogFileService;
+
+
+
+    public Scan initiateScan(Scan scan,boolean isApi) {
         log.debug("Initiate scan");
         scan.setStatus("Pending");
+        if(isApi){
+            ScanAction scanAction = ScanAction.builder().scanActionType(ScanActionType.ADD).scan(scan).build();
+            watchdogFileService.appendOperation(scanAction);
+        }else{
+            scan =  scanRepository.save(scan);
+        }
         //processScan(scan);
-        return scanRepository.save(scan);
+        return scan;
     }
 
     public List<Scan> getScansByUserID(Long userId) {
@@ -62,12 +76,15 @@ public class ScanService {
         return scanRepository.findAll(); // This uses JpaRepository's built-in method
     }
 
-    public int getTotalIssuesForAllUsers(){
-        List<Scan> allScans =scanRepository.findAll();
-        int totalIssues = allScans.stream().mapToInt(Scan::getIssues).sum();
+    public int getTotalIssuesForAllUsers() {
+        Integer totalIssues = scanRepository.findTotalIssuesForAllUsers();
+        if (totalIssues == null) {
+            totalIssues = 0;
+        }
         log.info("Total issues for all users = " + totalIssues);
         return totalIssues;
     }
+
 
 
 
